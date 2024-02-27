@@ -12,6 +12,11 @@ The program can be compiled using the following command:
 cargo build --release
 ```
 
+Since `zpool` is used to mount and unmount the local dataset, the program must be run as `root` or you should add the following line to your `/etc/sudoers` file:
+
+```sh
+your_user ALL=(ALL) NOPASSWD: /usr/sbin/zpool
+```
 
 ## 🏃‍♂️ Usage
 
