@@ -48,11 +48,11 @@ fn main() {
     let host = var("TRUENAS_SCALE_HOST").unwrap();
     let token = var("TRUENAS_SCALE_TOKEN").unwrap();
     let tasks_raw = var("TRUENAS_SCALE_TASKS").unwrap();
-    let tasks = tasks_raw.split(":").collect::<Vec<_>>();
+    let tasks = tasks_raw.split(':').collect::<Vec<_>>();
     let datasets_raw = var("LOCAL_DATASETS").unwrap();
-    let datasets = datasets_raw.split(":").collect::<Vec<_>>();
+    let datasets = datasets_raw.split(':').collect::<Vec<_>>();
     let disks_raw = var("LOCAL_DISKS").unwrap();
-    let disks = disks_raw.split(":").collect::<Vec<_>>();
+    let disks = disks_raw.split(':').collect::<Vec<_>>();
 
     let client = Client::Client::new(&host, &token);
 
@@ -75,7 +75,7 @@ fn main() {
     println!("{:?}", tasks);
 
     // - Send replication requests
-    for (_, id) in &tasks {
+    for id in tasks.values() {
         client.Send_replication_request(**id).unwrap();
     }
     info!("Sent replication requests");

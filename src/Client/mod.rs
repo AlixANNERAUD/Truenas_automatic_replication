@@ -36,7 +36,7 @@ impl Client {
     pub fn List_replication_tasks(&self) -> Result<HashMap<String, usize>, String> {
         let response = self
             .client
-            .get(&format!(
+            .get(format!(
                 "https://{}/api/v2.0/replication?count=false",
                 self.host
             ))
@@ -58,13 +58,10 @@ impl Client {
         Ok(tasks)
     }
 
-    pub fn Send_replication_request(
-        &self,
-        task_id: usize
-    ) -> Result<(), String> {
+    pub fn Send_replication_request(&self, task_id: usize) -> Result<(), String> {
         let response = self
             .client
-            .post(&format!(
+            .post(format!(
                 "https://{}/api/v2.0/replication/id/{}/run",
                 self.host, task_id
             ))
@@ -81,13 +78,10 @@ impl Client {
         Ok(())
     }
 
-    pub fn Get_replication_task_state(
-        &self,
-        task_id: usize
-    ) -> Result<State, String> {
+    pub fn Get_replication_task_state(&self, task_id: usize) -> Result<State, String> {
         let response = self
             .client
-            .get(&format!(
+            .get(format!(
                 "https://{}/api/v2.0/replication/id/{}",
                 self.host, task_id
             ))
@@ -98,7 +92,9 @@ impl Client {
             .json()
             .map_err(|e| format!("failed to parse json: {}", e))?;
 
-        let state = json["state"]["state"].as_str().ok_or("Failed to parse state")?; // "RUNNING", "ERROR", "SUCCESS
+        let state = json["state"]["state"]
+            .as_str()
+            .ok_or("Failed to parse state")?; // "RUNNING", "ERROR", "SUCCESS
 
         match state {
             "ERROR" => Ok(State::Error),
