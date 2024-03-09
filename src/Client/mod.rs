@@ -22,7 +22,7 @@ impl Client {
                 .default_headers(reqwest::header::HeaderMap::from_iter(vec![
                     (
                         reqwest::header::AUTHORIZATION,
-                        format!("Basic {}", token).parse().unwrap(),
+                        format!("Bearer {}", token).parse().unwrap(),
                     ),
                     (reqwest::header::ACCEPT, "application/json".parse().unwrap()),
                 ]))
